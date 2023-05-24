@@ -10,7 +10,7 @@ import java.util.List;
 //logica de la api. Llaman a la BBDD
 public interface BookService {
 
-    Book addBook(Book book, long publisherId, long writerId) throws PublisherNotFoundException, WriterNotFoundException;
+    Book addBook(Book book);
     void deleteBook(long id) throws BookNotFoundException;
     Book modifyBook(long id, Book newBook) throws BookNotFoundException;
     List<Book> findAll();

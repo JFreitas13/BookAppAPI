@@ -42,8 +42,8 @@ public class Publisher {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "bookPublisher")
-    @JsonBackReference(value = "book_publisher")
-    private List<Book> books;
+//    @OneToMany(mappedBy = "bookPublisher")
+//    @JsonBackReference(value = "book_publisher")
+//    private List<Book> books;
 
 }

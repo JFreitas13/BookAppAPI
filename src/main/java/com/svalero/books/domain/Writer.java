@@ -46,7 +46,7 @@ public class Writer {
     @Max(value = 5)
     private float reviews;
 
-    @OneToMany(mappedBy = "bookWriter")
-    @JsonBackReference(value = "book_writer")
-    private List<Book> books;
+//    @OneToMany(mappedBy = "bookWriter")
+//    @JsonBackReference(value = "book_writer")
+//    private List<Book> books;
 }

@@ -36,10 +36,10 @@ public class BookController {
 //        return new ResponseEntity<>(newBook, HttpStatus.CREATED);
 //    }
 
-    @PostMapping("/publishers/{publishersId}/writers/{writerId}/books")
-    public ResponseEntity<Book> addBook(@Valid @PathVariable("publishersId") long publisherId, @PathVariable("writerId") long writerId, @RequestBody Book book) throws PublisherNotFoundException, WriterNotFoundException {
+    @PostMapping("/books")
+    public ResponseEntity<Book> addBook(@Valid @RequestBody Book book) {
         logger.debug("begin addBook"); //Para indicar en el log que alguien ha llamado a esta parte
-        Book newBook = bookService.addBook(book, publisherId, writerId);
+        Book newBook = bookService.addBook(book);
         logger.debug("end addBook"); //Para indicar en el log que termina la llamada anterior
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);
     }

@@ -72,12 +72,12 @@ public class Book {
     @OneToMany(mappedBy = "orderBook")
     @JsonBackReference(value = "order_book")
     private List<Order> orders;
-
-    @ManyToOne
-    @JoinColumn(name = "publisher_id")
-    private Publisher bookPublisher;
-
-    @ManyToOne
-    @JoinColumn(name = "writer_id")
-    private Writer bookWriter;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "publisher_id")
+//    private Publisher bookPublisher;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "writer_id")
+//    private Writer bookWriter;
 }

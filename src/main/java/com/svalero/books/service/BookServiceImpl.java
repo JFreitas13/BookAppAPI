@@ -34,15 +34,7 @@ public class BookServiceImpl implements BookService {
     private ModelMapper modelMapper;
 
     @Override
-    public Book addBook(Book book, long publisherId, long writerId) throws PublisherNotFoundException, WriterNotFoundException {
-
-        Publisher publisher = publisherRepository.findById(publisherId)
-                .orElseThrow(PublisherNotFoundException::new);
-        book.setBookPublisher(publisher);
-
-        Writer writer = writerRepository.findById(writerId)
-                .orElseThrow(WriterNotFoundException::new);
-        book.setBookWriter(writer);
+    public Book addBook(Book book) {
 
         return bookRepository.save(book); //metodo save es "gratis" para guardar. Le pasas el objeto y el metodo save lo guarda en la BBDD
     }
