@@ -39,15 +39,21 @@ public class Bookstore {
     @Pattern(regexp = "[6][0-9]{8}") //para que el telefono movil empiece por 6 y tenga 9 digitos.
     private String phoneNumber;
 
-    @Column
-    @NotNull(message = "El campo no puede estar vacío")
-    @DateTimeFormat(pattern = "hh:mm")
-    private LocalTime open;
+//    @Column
+//    @NotNull(message = "El campo no puede estar vacío")
+//    @DateTimeFormat(pattern = "hh:mm")
+//    private LocalTime open;
+//
+//    @Column
+//    @NotNull(message = "El campo no puede estar vacío")
+//    @DateTimeFormat(pattern = "hh:mm")
+//    private LocalTime close;
 
     @Column
-    @NotNull(message = "El campo no puede estar vacío")
-    @DateTimeFormat(pattern = "hh:mm")
-    private LocalTime close;
+    private double latitude;
+
+    @Column
+    private double longitud;
 //
 //    @ManyToMany(mappedBy = "bookstores" )
 //    private List<Book> books;
