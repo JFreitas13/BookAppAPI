@@ -1,37 +1,24 @@
-# AA_JF_AccesoDatos
-## Actividad de Aprendizaje de a asignatura de Acceso a Datos - 1Q
+# AA_JF_PMDM
+## Actividad de Aprendizaje de a asignatura de Programación Multimedia y Dispositivos Moviles - 2Q
+
+API utilizada para el desarrollo de la aplicación Android.
 
 ### Requisitos (1 pto cada uno, obligatorios)
-- [x] El modelo de datos estará compuesto de, al menos, 5 clases y tendrán que existir relaciones entre ellas. Cada clase tendrá, al menos, 6 atributos (String, int, float, boolean y algún tipo para almacenar fechas). Cada clase tendrá, al menos, 2 atributos obligatorios y algún otro con algún tipo de restricción de formato/validación.
-- [x] Se tendrá que poder realizar, el menos, las operaciones CRUD sobre cada una de las clases. Se controlarán, al menos, los errores 400, 404 y 500Cancel changes
-- [x] Añade opciones de filtrado para al menos una operación en cada clase en donde se puedan indicar hasta 3 campos diferentes (solo aplicable para operaciones GET)
-- [x] Prepara una colección Postman que permita probar todas las operaciones desarrolladas
-- [x] Configura en el proyecto la librería logback para que la aplicación web cuente con un log. Añade trazas en el código de forma que permita seguir el rastro de ejecución en el log (para todas las operaciones que se puedan realizar y también para los casos en los que se recojan errores)
+- [x] La aplicación deberá consumir la API diseñada y desarrollada en la asignatura de Acceso a Datos. Al menos 2 operaciones de cada uno de estos métodos: POST, GET, PUT y DELETE. Al menos una de ellas permitirá listar información
+- [x] La comunicación con la API se llevará a cabo utilizando Retrofit
+- [x] Se hará uso de mapas para mostrar información (si es necesario, habrá que añadir información geográfica a alguno de los recursos de la API diseñada)
+- [x] La aplicación se diseñará utilizando el patrón MVP (Model View Presenter)
+- [x] El usuario podrá almacenar como “favorito” aquella información de la API que le resulte de interés
 
 ### Otras funcionalidades (1 pto cada una)
-- [ ] Añade una operación PATCH para cada una de las clases del modelo
-- [x] Utiliza la herramienta Git (y GitHub) durante todo el desarrollo de la aplicación. Escribe el fichero README.md para explicar cómo poner en marcha el proyecto. Utiliza el gestor de Issues para los problemas/fallos que vayan surgiendo
-- [ ] Añade 3 nuevos endpoints a la aplicación (sin repetir método) que realicen nuevas operaciones con los datos y que requieran el uso de DTOs y/o utilizar las relaciones entre las clases
-- [ ] Securiza algunas de tus operaciones de la API con un token JWT
-- [ ] Añade 3 operaciones que utilicen consultas JPQL para extraer la información de la base de datos
-- [ ] Añade 3 operaciones que utilicen consultas SQL nativas para extraer la información de la base de datos
-- [x] Añade 2 clases más al modelo de datos con sus respectivas operaciones CRUD (inclúyelas también en la colección Postman)
-- [ ] Parametriza la colección Postman para que pueda ser ejecutada con el Runner de Postman y realizar una prueba completa de la API
+- [ ] Utilizar la Directions API para guiar al usuario a alguna ubicación relevante en la aplicación
+- [x] Utiliza la herramienta Git (y GitHub) durante todo el desarrollo de la aplicación. Utiliza el gestor de Issues para los problemas/fallos que vayan surgiendo
+- [ ] Añadir un menú de preferencias con al menos 3 opciones que modifiquen el comportamiento de la aplicación. Este menú estará siempre disponible en el ActionBar
+- [ ] Hacer uso de mapas en las pantalla donde se registre información. Para indicar información geográfica, por ejemplo
+- [ ] El usuario podrá hacer búsquedas para filtrar la información en los listados de datos
+- [ ] Diseñar al menos 3 layouts para otras posiciones de la pantalla (portrait/landscape)
+- [x] Utilizar Material Design para personalizar el diseño de la aplicación
+- [ ] Utilizar las credenciales de usuario en la aplicación para comunicarse con la API (si ésta se encuentra securizada con token JWT)
 
-## Actividad de Aprendizaje de a asignatura de Acceso a Datos - 2Q
 
-### Requisitos (1 pto cada uno, obligatorios)
-- [x] Diseña la API y escribe el fichero OpenAPI 3.0 de la API. Incluye, al menos, los casos de éxito (20X), 400, 404 y los 500.
-- [x] Diseña una API Virtual de forma que existan, al menos, 3 Casos de Uso para cada operación (tanto de OK como para KO).
-- [x] Prepara una colección Postman de prueba para la API diseñada y otra que permita probar todos los Casos de Uso de la API virtual
-- [x] Diseña, al menos, 3 operaciones para que funcionen de forma reactiva con WebFlux.
-- [x] Ajusta el desarrollo de tu proyecto para que cumpla todas las decisiones de diseño adoptadas en los puntos anteriores
-
-### Otras funcionalidades (1 pto cada una)
-
-- [ ] Si tu API está securizada, añade la información necesaria al fichero OpenAPI 3.0
-- [ ] Añade alguna operación en la que se envien o reciban ficheros
-- [X] Parametriza ambas colecciones Postman de forma que sea fácil cambiar el host, puerto o basePath de la API
-- [ ] Añade al fichero de especificación de la API (OpenAPI 3.0) un par de ejemplos para cada operación
-- [X] Utiliza las herramientas Git y GitHub durante todo el desarrollo de la aplicación. Utiliza el gestor de Issues para los problemas/fallos que vayan surgiendo.
 
