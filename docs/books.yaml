@@ -1,0 +1,1055 @@
+openapi: 3.0.3
+info:
+  title: Books API
+  description: API que permite consultar los libros disponibles en un libreria.
+  version: 1.0.0
+servers:
+  - url: 'https//localhost:8081'
+    description: books
+
+# catalogamos los endpoit de la API
+tags:
+  - name: Book
+    description: Operaciones sobre los books
+  - name: Bookstore
+    description: Operaciones sobre las bookstore
+  - name: Publisher
+    description: Operaciones solos los publisher
+  - name: Writer
+    description: Operaciones solos los writer
+  - name: User
+    description: Operaciones solos los user
+
+# rutas de las operaciones por cada path
+paths:
+  /publishers/{publishersId}/writers/{writerId}/books:
+    parameters:
+      - $ref: '#/components/parameters/PublisherInBook'
+      - $ref: '#/components/parameters/WriterInBook'
+
+    post:
+      tags:
+        - Book
+      summary: Añadir libro
+      description: Añadir un nuevo libro
+      operationId: postBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookIn'
+      responses:
+        '201':
+          description: Libro añadido correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /books:
+    get:
+      tags:
+        - Book
+      summary: Listado de libros
+      description: Listado con la información de todos los libros. Tiene disponibles 3 filtros que son name, yearEdition y pagesNumber.
+      operationId: getBooks
+      parameters:
+        - $ref: '#/components/parameters/NameBook'
+        - $ref: '#/components/parameters/YearEdition'
+        - $ref: '#/components/parameters/PagesNumber'
+      responses:
+        '200':
+          description: Listado de libros.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /books/{id}:
+    parameters:
+      - $ref: '#/components/parameters/BookId'
+    delete:
+      tags:
+        - Book
+      summary: Eliminar un libro
+      description: Operación de borrado de libro por id.
+      operationId: deleteBook
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - Book
+      summary: Buscar libro por id
+      description: Obtiene la información del libro cuya id se pasa en la URL.
+      operationId: getBookId
+      responses:
+        '200':
+          description: Información del libro buscado por id.
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Book'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    put:
+      tags:
+        - Book
+      summary: Modificar un libro
+      description: Operación que permite modificar un libro
+      operationId: modifyBook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookIn'
+      responses:
+         '200':
+           description: Libro modificado correctamente
+           content:
+             application/json:
+               schema:
+                 $ref: '#/components/schemas/Book'
+         '400':
+           $ref: '#/components/responses/BadRequest'
+         '404':
+           $ref: '#/components/responses/NotFound'
+         '500':
+           $ref: '#/components/responses/InternalServerError'
+
+  /bookstores:
+    post:
+      tags:
+        - Bookstore
+      summary: Añadir Libreria
+      description: Añadir una libreria nueva
+      operationId: postBookstore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookstoreIn'
+      responses:
+        '201':
+          description: Libreria añadida correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bookstore'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - Bookstore
+      summary: Listado de librerias
+      description: Listado con la información de todas las librerias. Tiene disponibles 3 filtros que son name, city y zipCode.
+      operationId: getBookstore
+      parameters:
+        - $ref: '#/components/parameters/NameBookstore'
+        - $ref: '#/components/parameters/City'
+        - $ref: '#/components/parameters/ZipCode'
+      responses:
+        '200':
+          description: Listado de Librerias.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bookstore'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /bookstores/{id}:
+    parameters:
+      - $ref: '#/components/parameters/BookstoreId'
+    delete:
+      tags:
+        - Bookstore
+      summary: Eliminar una libreria
+      description: Operación de borrado de una libreria por id.
+      operationId: deleteBookstore
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - Bookstore
+      summary: Buscar libreria por id
+      description: Obtiene la información de la libreria cuya id se pasa en la URL.
+      operationId: getBookstoreId
+      responses:
+        '200':
+          description: Información de la libreria buscada por id.
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Bookstore'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+           $ref: '#/components/responses/NotFound'
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+
+    put:
+      tags:
+        - Bookstore
+      summary: Modificar una libreria
+      description: Operación que permite modificar una libreria
+      operationId: modifyBookstore
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookstoreIn'
+      responses:
+        '200':
+          description: Libreria modificada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bookstore'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /publishers:
+    post:
+      tags:
+        - Publisher
+      summary: Añadir Editorial
+      description: Añadir una editorial nueva
+      operationId: postPublisher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublisherIn'
+      responses:
+        '201':
+          description: Editorial añadida correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - Publisher
+      summary: Listado de editoriales
+      description: Listado con la información de todas las editoriales. Tiene disponibles 3 filtros que son name, city y zipCode.
+      operationId: getPublisher
+      parameters:
+        - $ref: '#/components/parameters/NamePublisher'
+        - $ref: '#/components/parameters/City'
+        - $ref: '#/components/parameters/ZipCode'
+      responses:
+        '200':
+          description: Listado de Editoriales.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Publisher'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /publishers/{id}:
+    parameters:
+      - $ref: '#/components/parameters/PublisherId'
+    delete:
+      tags:
+        - Publisher
+      summary: Eliminar una editorial
+      description: Operación de borrado de una editorial por id.
+      operationId: deletePublisher
+      responses:
+         '204':
+            $ref: '#/components/responses/NoContent'
+         '400':
+           $ref: '#/components/responses/BadRequest'
+         '404':
+            $ref: '#/components/responses/NotFound'
+         '500':
+            $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - Publisher
+      summary: Buscar editorial por id
+      description: Obtiene la información de la editorial cuya id se pasa en la URL.
+      operationId: getPublisherId
+      responses:
+        '200':
+          description: Información de la editorial buscado por id.
+          content:
+            application/json:
+               schema:
+                   $ref: '#/components/schemas/Publisher'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+           $ref: '#/components/responses/NotFound'
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+
+    put:
+      tags:
+        - Publisher
+      summary: Modificar una editorial
+      description: Operación que permite modificar una editorial
+      operationId: modifyPublisher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublisherIn'
+      responses:
+        '200':
+          description: Editorial modificado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /writers:
+    post:
+      tags:
+        - Writer
+      summary: Añadir Escritor
+      description: Añadir un nuevo escritor
+      operationId: postWriter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WriterIn'
+      responses:
+        '201':
+          description: Escritor añadido correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Writer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - Writer
+      summary: Listado de escritores
+      description: Listado con la información de todas los escritores. Tiene disponibles 3 filtros que son name, city y zipCode.
+      operationId: getAllWriters
+      parameters:
+        - $ref: '#/components/parameters/NameWriter'
+        - $ref: '#/components/parameters/Age'
+        - $ref: '#/components/parameters/Reviews'
+      responses:
+        '200':
+          description: Listado de Escritores.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Writer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /writers/{id}:
+    parameters:
+      - $ref: '#/components/parameters/WriterId'
+    delete:
+      tags:
+        - Writer
+      summary: Eliminar un escritor
+      description: Operación de borrado de un escritor por id.
+      operationId: deleteWriter
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - Writer
+      summary: Buscar escritor por id
+      description: Obtiene la información del escritor cuya id se pasa en la URL.
+      operationId: getWriterId
+      responses:
+        '200':
+          description: Información del escritor buscado por id.
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Writer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    put:
+      tags:
+        - Writer
+      summary: Modificar un escritor
+      description: Operación que permite modificar un escritor
+      operationId: modifyWriter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WriterIn'
+      responses:
+        '200':
+          description: Escritor modificado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Writer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /users:
+    post:
+      tags:
+        - User
+      summary: Añadir usuario
+      description: Añadir un nuevo usuario
+      operationId: postUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserIn'
+      responses:
+        '201':
+          description: Usuario añadido correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - User
+      summary: Listado de usuarios
+      description: Listado con la información de todos los usuarios. Tiene disponibles 3 filtros que son name, city y zipCode.
+      operationId: getWriters
+      parameters:
+        - $ref: '#/components/parameters/NameUser'
+        - $ref: '#/components/parameters/City'
+        - $ref: '#/components/parameters/ZipCode'
+      responses:
+        '200':
+          description: Listado de Usuarios.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{id}:
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    delete:
+      tags:
+        - User
+      summary: Eliminar un usuario
+      description: Operación de borrado de un usuario por id.
+      operationId: deleteUser
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - User
+      summary: Buscar usuario por id
+      description: Obtiene la información del usuario cuya id se pasa en la URL.
+      operationId: getUserId
+      responses:
+        '200':
+          description: Información del usuario buscado por id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    put:
+      tags:
+        - User
+      summary: Modificar un usuario
+      description: Operacion que permite modificar un usuario
+      operationId: modifyUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserIn'
+      responses:
+        '200':
+          description: Usuario modificado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    BookIn:
+      type: object
+      properties:
+        name:
+          type: string
+          format: string
+          description: Nombre del libro. Se comprueba que el campo no sea null ni esté en blanco.
+          example: Harry Potter y la Piedra Filosofal
+        yearEdition:
+          type: integer
+          format: int32
+          description: Año de edición del libro. Se comprueba que el campo no sea NULL y que el formato sea "yyyy"
+          example: 2023
+        ageRecommended:
+          type: string
+          format: string
+          description: Edad recomendada para el libro
+          example: Mayores de 12 años
+        pagesNumber:
+          type: integer
+          format: int32
+          description: Numero total de paginas del libro. Se comprueba que ese numero sea superior a 0.
+          example: 245
+        description:
+          type: string
+          format: string
+          description: Breve resumen del libro.
+          example: Libro sobre unos amigos que se van a una escuela de magia.
+        eBook:
+          type: boolean
+          format: boolean
+          description: Indicamos si el libro es o no ebook. Este campo no puede ser null.
+
+    Book:
+      allOf:
+        - $ref: '#/components/schemas/BookIn'
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: Id autonúmerico y clave primaria.
+              example: 2
+            publisher:
+              $ref: '#/components/schemas/Publisher'
+            writer:
+              $ref: '#/components/schemas/Writer'
+
+#        - $ref: '#/components/schemas/BookOut'
+
+    BookstoreIn:
+      type: object
+      properties:
+        name:
+          type: string
+          format: string
+          description: Nombre de la libreria.
+          example: Libreria de la Magia
+        city:
+          type: string
+          format: string
+          description: Ciudad donde esta ubicada la libreria.
+          example: Zaragoza
+        zipCode:
+          type: string
+          format: string
+          description: Código postal donde está ubicada la libreria. Se valida que la longitud sean 5 caracteres..
+          example: 50410
+        phoneNumber:
+          type: string
+          format: string
+          description: Telefono móvil. Se comprueba con regex el formato del telefono. Se valida que el campo no sea null ni esté en blanco .
+          example: 615615615
+        open:
+          type: string
+          format: time
+          description: Horario de apertura. No puede ser null y el formato debe ser hh:mm
+          example: 9:00
+        close:
+          type: string
+          format: time
+          description: Horario de cierre. No puede ser null y el formato debe ser hh:mm
+          example: 19:00
+
+    Bookstore:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: Id autonúmerico y clave primaria.
+              example: 2
+        - $ref: '#/components/schemas/BookstoreIn'
+
+    PublisherIn:
+      type: object
+      properties:
+        name:
+          type: string
+          format: string
+          description: Nombre del publisher. Se comprueba que el campo no sea null ni esté en blanco.
+          example: Editoral Magia
+        city:
+          type: string
+          format: string
+          description: Ciudad donde esta ubicado.
+          example: Zaragoza
+        zipCode:
+          type: string
+          format: string
+          description: Código postal. Se comprueba que el campo no sea null ni esté en blanco asi como que la longitud sea de 5 caracteres.
+          example: 50410
+        phoneNumber:
+          type: string
+          format: string
+          description: Telefono móvil. Se comprueba con regex el formato del telefono .
+          example: 615615615
+        description:
+          type: string
+          format: string
+          description: Breve resumen del publisher.
+          example: Editora especializada en libros de mágia.
+
+    Publisher:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: Id autonúmerico y clave primaria.
+              example: 6
+        - $ref: '#/components/schemas/PublisherIn'
+
+    WriterIn:
+      type: object
+      properties:
+        name:
+          type: string
+          format: string
+          description: Nombre del Escritor. Se comprueba que el campo no sea null ni esté en blanco y que minimo 5 caracteres y maximo 30.
+          example: Pepito Manuel
+        description:
+          type: string
+          format: string
+          description: Breve resumen del escritor. Se comprueba que el campo no sea null ni esté en blanco.
+          example: Escritor de libros de magia.
+        age:
+          type: string
+          format: string
+          description: Edad del escritor. Se comprueba que el campo no sea null ni esté en blanco.
+          example: 45
+        socialNetworks:
+          type: string
+          format: url
+          description: Redes sociales. Debe ser una URL.
+          example: www.twitter.com/pepitomanuel
+        reviews:
+          type: number
+          format: float
+          description: Valoraciones del escritor. Se comprueba que minimo 5 caracteres y maximo 30
+          example: 4,5
+
+    Writer:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: Id autonúmerico y clave primaria.
+              example: 6
+        - $ref: '#/components/schemas/WriterIn'
+
+    UserIn:
+      type: object
+      properties:
+        name:
+          type: string
+          format: string
+          description: Nombre del usuario. Se comprueba que el campo no sea null ni esté en blanco.
+          example: Manuel Silva
+        email:
+          type: string
+          format: email
+          description: Correo electronico del usuario. Se comprueba que el campo no sea null ni esté en blanco.
+          example: ms456@gm.com
+        password:
+          type: string
+          format: password
+          description: Contraseña del usuario. Se comprueba que el campo no sea null ni esté en blanco y que minimo tenga 8 caracteres.
+          example: 12345678
+        phoneNumber:
+          type: string
+          format: string
+          description: Telefono móvil. Se comprueba con regex el formato del telefono .
+          example: 615615615
+        city:
+          type: string
+          format: string
+          description: Ciudad donde esta ubicado.
+          example: Zaragoza
+        zipCode:
+          type: string
+          format: string
+          description: Código postal. Se comprueba que el campo no sea null ni esté en blanco asi como que la longitud sea de 5 caracteres.
+          example: 50410
+        rol:
+          type: string
+          format: string
+          description: Rol del usuario. Se comprueba que el campo no sea null ni esté en blanco.
+          example: 50410
+
+    User:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: Id autonúmerico y clave primaria.
+              example: 6
+        - $ref: '#/components/schemas/UserIn'
+
+
+    BadRequest:
+      type: object
+      description: Información enviada incorrecta
+      properties:
+        code:
+          type: string
+          description: código de estado
+          example: 400
+        message:
+          type: string
+          description: Mensaje de error
+          example: Bad Request
+        errors:
+          items:
+            $ref: '#/components/schemas/ErrorField'
+
+    ErrorField:
+      type: object
+      description: Error de validación en un campo de entrada
+      properties:
+        fieldName:
+          type: string
+          description: El campo donde se ha producido el error
+          example: campo param
+        message:
+          type: string
+          description: Mensaje de error asociado con el campo
+          example: Datos incorrectos en alguno de los campos
+
+    NotFound:
+      type: object
+      description: Objeto no encontrado
+      properties:
+        code:
+          type: string
+          description: código de estado
+          example: 404
+        message:
+          type: string
+          description: Mensaje de error
+          example: Not found
+
+    InternalServerError:
+      type: object
+      description: Error Interno de la API
+      properties:
+        code:
+          type: string
+          description: Código de estado
+          example: 500
+        message:
+          type: string
+          description: Mensaje de error
+          example: Internal Server Error
+
+  responses:
+    NoContent:
+      description: No content
+
+    BadRequest:
+      description: Error de validación
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequest'
+
+    NotFound:
+      description: Recurso no encontrado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFound'
+
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InternalServerError'
+
+  parameters:
+    BookId:
+      name: id
+      in: path
+      description: ID del libro
+      required: true
+      schema:
+        type: integer
+        format: int32
+        example: 2
+    NameBook:
+      name: name
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por el nombre introducido
+      required: false
+      schema:
+        type: string
+        format: string
+        example: Harry Potter
+    YearEdition:
+      name: yearEdition
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por el año de edicion
+      required: false
+      schema:
+        type: integer
+        format: int32
+        example: 2020
+    PagesNumber:
+      name: pagesNumber
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por el número de páginas
+      required: false
+      schema:
+        type: integer
+        format: int32
+        example: 245
+    BookstoreId:
+      name: id
+      in: path
+      description: ID de la libreria
+      required: true
+      schema:
+        type: integer
+        format: int32
+        example: 2
+    NameBookstore:
+      name: name
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por el nombre introducido
+      required: false
+      schema:
+        type: string
+        format: string
+        example: Libreria de la Magia
+    PublisherId:
+      name: id
+      in: path
+      description: ID de la editorial
+      required: true
+      schema:
+        type: integer
+        format: int32
+        example: 10
+    PublisherInBook:
+      name: publishersId
+      in: path
+      description: ID de la editorial
+      required: true
+      schema:
+        type: integer
+        format: int32
+        example: 10
+    NamePublisher:
+      name: name
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por el nombre introducido
+      required: false
+      schema:
+        type: string
+        format: string
+        example: Editorial Mágica
+    NameUser:
+      name: name
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por el nombre introducido
+      required: false
+      schema:
+        type: string
+        format: string
+        example: Manuel Silva
+    WriterId:
+      name: id
+      in: path
+      description: ID del escritor
+      required: true
+      schema:
+        type: integer
+        format: int32
+        example: 20
+    WriterInBook:
+      name: writerId
+      in: path
+      description: ID del escritor
+      required: true
+      schema:
+        type: integer
+        format: int32
+        example: 20
+    UserId:
+      name: id
+      in: path
+      description: ID del escritor
+      required: true
+      schema:
+        type: integer
+        format: int32
+        example: 9
+    City:
+      name: city
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por la ciudad indicada.
+      required: false
+      schema:
+        type: string
+        format: string
+        example: Zaragoza
+    ZipCode:
+      name: zipCode
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por el codigo postal introducido
+      required: false
+      schema:
+        type: string
+        format: string
+        example: 50410
+    NameWriter:
+      name: name
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por el nombre introducido
+      required: false
+      schema:
+        type: string
+        format: string
+        example: Pepito Manuel
+    Age:
+      name: age
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por la edad indicada.
+      required: false
+      schema:
+        type: string
+        format: string
+        example: 45
+    Reviews:
+      name: reviews
+      in: query #@RequestParam: no forma parte de la URL, se carga por "?" como opción, es un "WHERE".
+      description: Filtrar por la valoracion indicada
+      required: false
+      schema:
+        type: string
+        format: string
+        example: 4,5
