@@ -85,28 +85,28 @@
 				</configuration>
 			</plugin>
 
-			<!-- Para que funcione el proyecto -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-toolchains-plugin</artifactId>
-				<version>3.0.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>toolchain</goal>
-						</goals>
-						<configuration>
-							<toolchains>
-								<jdk>
-									<!-- Version de Java a usar -->
-									<version>17</version>
-								</jdk>
-							</toolchains>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- Fin Para que funcione el proyecto -->
+<!--			&lt;!&ndash; Para que funcione el proyecto &ndash;&gt;-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-toolchains-plugin</artifactId>-->
+<!--				<version>3.0.0</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<goals>-->
+<!--							<goal>toolchain</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<toolchains>-->
+<!--								<jdk>-->
+<!--									&lt;!&ndash; Version de Java a usar &ndash;&gt;-->
+<!--									<version>17</version>-->
+<!--								</jdk>-->
+<!--							</toolchains>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+<!--			&lt;!&ndash; Fin Para que funcione el proyecto &ndash;&gt;-->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
